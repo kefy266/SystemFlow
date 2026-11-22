@@ -1,3 +1,4 @@
+# SystemFlow - Pc Inspector
 Bu proje teknik servisler için açık kaynaklı geliştirilen bi sistem platformudur.
 Teknik servislerin, bilgisayar ile ilgilenenler kendileri derleyerek veya direk python server ile çalıştırılmasını sağlar.
 
