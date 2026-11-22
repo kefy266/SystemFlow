@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServisFlow Inspector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+    --marsh-50: #fcfbf9;
+    --marsh-100: #f7f5f1;
+    --marsh-200: #efebe5;
+    --marsh-300: #e3ded6;
+    --marsh-600: #6f665d;
+    --marsh-800: #403a35;
+    --marsh-900: #221f1c;
+    --nate-500: #4f46e5;
+    --nate-600: #4335d4;
+    --nate-700: #3729ae;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Inter", system-ui, sans-serif;
+    color: var(--marsh-900);
+
+    background: var(--marsh-100);
+    background-image:
+        radial-gradient(60rem 40rem at 8% -10%, rgba(79,70,229,.16), transparent 60%),
+        radial-gradient(52rem 36rem at 96% 4%, rgba(124,115,240,.14), transparent 62%),
+        radial-gradient(44rem 34rem at 50% 108%, rgba(170,162,156,.22), transparent 65%);
+
+    background-attachment: fixed;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+/* KARTLAR */
+
+.card {
+    width: calc(50% - 1rem);
+    max-width: none;
+
+    background: linear-gradient(
+        140deg,
+        rgba(255,255,255,.82),
+        rgba(255,255,255,.46) 42%,
+        rgba(239,235,229,.55)
+    );
+
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 1.75rem;
+    padding: 2rem 2rem 1.75rem;
+
+    backdrop-filter: blur(28px) saturate(185%);
+    -webkit-backdrop-filter: blur(28px) saturate(185%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.95),
+        0 30px 60px -34px rgba(79,70,229,.32),
+        0 4px 14px -8px rgba(34,31,28,.12);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background:
+        radial-gradient(120% 70% at 12% 0%, rgba(255,255,255,.75), transparent 55%),
+        radial-gradient(90% 60% at 90% 8%, rgba(196,193,251,.45), transparent 60%);
+
+    opacity: .9;
+    pointer-events: none;
+}
+
+/* BAŞLIKLAR */
+
+h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 300;
+    letter-spacing: -.03em;
+    font-size: 1.7rem;
+    margin: 0 0 1.25rem;
+    color: var(--marsh-900);
+}
+
+h1 span {
+    color: var(--nate-600);
+}
+
+/* SATIRLAR */
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: .7rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.6);
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+/* ETİKETLER */
+
+.label {
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--marsh-600);
+    letter-spacing: .02em;
+}
+
+.value {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--marsh-900);
+    text-align: right;
+    word-break: break-word;
+}
+
+.value.accent {
+    color: var(--nate-700);
+}
+
+/* BADGE */
+
+.badge {
+    display: inline-block;
+    margin-bottom: .9rem;
+
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+
+    color: var(--nate-700);
+    background: rgba(255,255,255,.62);
+
+    border: 1px solid rgba(255,255,255,.85);
+    border-radius: 999px;
+    padding: .3rem .7rem;
+}
+
+/* FOOTER */
+
+.foot {
+    margin-top: 1.25rem;
+    font-size: .7rem;
+    color: var(--marsh-600);
+    text-align: center;
+}
+
+/* TABLET VE MOBİL */
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+        padding: 1.25rem;
+    }
+
+    .card {
+        width: 100%;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <span class="badge">ServisFlow Inspector</span>
+        <h1>System Flow — <span>Bilgisayar Raporu</span></h1>
+
+        <div class="row"><span class="label">İşletim Sistemi</span><span class="value" id="os">—</span></div>
+        <div class="row"><span class="label">Kullanıcı</span><span class="value" id="user">—</span></div>
+        <div class="row"><span class="label">CPU Çekirdek</span><span class="value" id="cpu">—</span></div>
+        <div class="row"><span class="label">CPU Kullanılabilir Çekirdek</span><span class="value" id="cpu-yuk">—</span></div>
+        <div class="row"><span class="label">Process ID</span><span class="value accent" id="pid">—</span></div>
+        <div class="row"><span class="label">RAM</span><span class="value" id="ram">—</span></div>
+        <div class="row"><span class="label">Çekirdek</span><span class="value" id="cekirdek">—</span></div>
+        <div class="row"><span class="label">Mevcut Dizin</span><span class="value" id="dizin">—</span></div>
+        <a href="https://github.com" target="_blank" style="display: block; text-align: center;">Made by kefy266. kefy266 is founder of Origin Edge</a>
+    </div>
+
+     <div class="card">
+        <span class="badge">HIZLI AKSİYONLAR</span>
+        <h1>System Flow — <span>Hemen Sayfaya Git</span></h1>
+    <div class="row">
+    <span class="label">Testler Sayfası</span>
+    <a class="value" href="/testler.html">Git →</a>
+</div>
+    </div>
+
+    <script>
+        fetch("/veriler.json", { cache: "no-store" })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("os").textContent = data.isletim_sistemi;
+                document.getElementById("user").textContent = data.kullanici;
+                document.getElementById("cpu").textContent = data.cpu_cekirdek;
+                document.getElementById("cpu-yuk").textContent = data.cpu_yuk;
+                document.getElementById("pid").textContent = data.pid;
+                document.getElementById("ram").textContent = data.ram;
+                document.getElementById("cekirdek").textContent = data.cekirdek;
+                document.getElementById("dizin").textContent = data.mevcut_dizin;
+            })
+            .catch(() => {
+                document.querySelectorAll(".value").forEach(el => { el.textContent = "veri yok"; });
+            });
+    </script>
+
+</body>
+</html>
